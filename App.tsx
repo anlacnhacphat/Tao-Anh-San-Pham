@@ -1,5 +1,5 @@
 
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { 
   Sparkles, 
   Layers, 
@@ -12,25 +12,68 @@ import {
   FileText,
   MousePointer2,
   Zap,
-  User
+  User,
+  Square,
+  Flower2,
+  Home,
+  Trees,
+  Box,
+  Baby,
+  UserRound
 } from 'lucide-react';
 import { AppState, ImageQuality } from './types';
 import ImageUploader from './components/ImageUploader';
 import { generateProductImage, checkApiKeySelection, openApiKeySelection } from './services/gemini';
 
-const PRESETS = [
-  { label: 'Nền trắng', value: 'Professional studio white background, pure white environment, clean minimalist aesthetic, high-end commercial photography, soft natural shadows beneath the product.' },
-  { label: 'Xuân Tết', value: 'Traditional Vietnamese Lunar New Year (Tết) festive background, elegant red and gold color palette, decorated with peach blossoms (hoa đào) and apricot flowers (hoa mai), traditional motifs, soft warm bokeh lighting, premium commercial advertising style.' },
-  { label: 'Phòng khách', value: 'Modern luxury living room background, soft bokeh, warm interior lighting, high-end lifestyle setting.' },
-  { label: 'Thiên nhiên', value: 'Natural outdoor setting, soft morning sunlight, blurred green forest background, organic aesthetic.' },
-  { label: 'Gỗ mộc', value: 'Rustic dark wood table surface, warm atmospheric lighting, cozy cafe mood, shallow depth of field.' },
+const BACKGROUND_PRESETS = [
+  { 
+    label: 'Nền trắng', 
+    icon: <Square size={14} />,
+    value: 'Professional studio white background, pure white environment, clean minimalist aesthetic, high-end commercial photography, soft natural shadows beneath the product.' 
+  },
+  { 
+    label: 'Xuân Tết', 
+    icon: <Flower2 size={14} />,
+    value: 'Traditional Vietnamese Lunar New Year (Tết) festive background, elegant red and gold color palette, decorated with peach blossoms (hoa đào) and apricot flowers (hoa mai), traditional motifs, soft warm bokeh lighting, premium commercial advertising style.' 
+  },
+  { 
+    label: 'Phòng khách', 
+    icon: <Home size={14} />,
+    value: 'Modern luxury living room background, soft bokeh, warm interior lighting, high-end lifestyle setting.' 
+  },
+  { 
+    label: 'Thiên nhiên', 
+    icon: <Trees size={14} />,
+    value: 'Natural outdoor setting, soft morning sunlight, blurred green forest background, organic aesthetic.' 
+  },
+  { 
+    label: 'Gỗ mộc', 
+    icon: <Box size={14} />,
+    value: 'Rustic dark wood table surface, warm atmospheric lighting, cozy cafe mood, shallow depth of field.' 
+  },
 ];
 
 const MODEL_PRESETS = [
-  { label: 'Người mẫu Nam', value: 'A handsome, young, and attractive professional Asian male model posing naturally with the product, elegant attire, blurred studio background, high-end commercial fashion photography.' },
-  { label: 'Người mẫu Nữ', value: 'A beautiful, young, and attractive professional Asian female model holding the product, elegant attire, blurred background, high-end commercial lifestyle photography.' },
-  { label: 'Bé Trai', value: 'A cute and professional young Asian boy model posing cheerfully with the product, stylish kids clothing, soft natural lighting, high-end commercial look.' },
-  { label: 'Bé Gái', value: 'A beautiful and professional young Asian girl model posing elegantly with the product, stylish kids clothing, cheerful expression, soft natural lighting, high-end commercial aesthetic.' },
+  { 
+    label: 'Người mẫu Nam', 
+    icon: <User size={14} />,
+    value: 'A handsome, young, and attractive professional Asian male model posing naturally with the product, elegant attire, blurred studio background, high-end commercial fashion photography.' 
+  },
+  { 
+    label: 'Người mẫu Nữ', 
+    icon: <UserRound size={14} />,
+    value: 'A beautiful, young, and attractive professional Asian female model holding the product, elegant attire, blurred background, high-end commercial lifestyle photography.' 
+  },
+  { 
+    label: 'Bé Trai', 
+    icon: <Baby size={14} />,
+    value: 'A cute and professional young Asian boy model posing cheerfully with the product, stylish kids clothing, soft natural lighting, high-end commercial look.' 
+  },
+  { 
+    label: 'Bé Gái', 
+    icon: <Baby size={14} />,
+    value: 'A beautiful and professional young Asian girl model posing elegantly with the product, stylish kids clothing, cheerful expression, soft natural lighting, high-end commercial aesthetic.' 
+  },
 ];
 
 const App: React.FC = () => {
@@ -38,7 +81,7 @@ const App: React.FC = () => {
     productImage: null,
     bgType: 'text',
     bgImage: null,
-    bgDescription: PRESETS[0].value,
+    bgDescription: BACKGROUND_PRESETS[0].value,
     quantity: 1,
     quality: 'Standard',
     isGenerating: false,
@@ -134,11 +177,11 @@ const App: React.FC = () => {
             <div className="bg-blue-600 p-2 rounded-lg">
               <Sparkles className="text-white h-5 w-5" />
             </div>
-            <h1 className="text-xl font-bold tracking-tight text-slate-800">TẠO ẢNH SẢN PHẨM - TẠ THÚC TÀI</h1>
+            <h1 className="text-xl font-bold tracking-tight text-slate-800 uppercase">TẠO ẢNH SẢN PHẨM - TẠ THÚC TÀI</h1>
           </div>
           <div className="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-500">
             <span className="hover:text-blue-600 transition-colors cursor-pointer">Tính năng</span>
-            <span className="hover:text-blue-600 transition-colors cursor-pointer text-blue-600">v2.5</span>
+            <span className="hover:text-blue-600 transition-colors cursor-pointer text-blue-600">v2.7</span>
           </div>
           <button 
             onClick={() => window.open('https://ai.google.dev/gemini-api/docs/billing', '_blank')}
@@ -170,7 +213,7 @@ const App: React.FC = () => {
             <section className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
               <div className="flex items-center space-x-2 mb-6">
                 <Layers className="text-blue-600 h-5 w-5" />
-                <h2 className="font-semibold text-lg">Cấu hình Background</h2>
+                <h2 className="font-semibold text-lg">Cấu hình Bối cảnh & Người mẫu</h2>
               </div>
 
               <div className="flex p-1 bg-slate-100 rounded-xl mb-6">
@@ -181,7 +224,7 @@ const App: React.FC = () => {
                   }`}
                 >
                   <FileText size={16} />
-                  <span>Mô tả văn bản</span>
+                  <span>Sử dụng AI</span>
                 </button>
                 <button
                   onClick={() => setState(prev => ({ ...prev, bgType: 'upload' }))}
@@ -195,61 +238,66 @@ const App: React.FC = () => {
               </div>
 
               {state.bgType === 'text' ? (
-                <div className="space-y-4">
-                  <div className="space-y-2">
+                <div className="space-y-6">
+                  {/* Background Presets Section */}
+                  <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <label className="block text-sm font-medium text-gray-700">Nội dung Background</label>
-                      <div className="flex items-center text-[10px] uppercase tracking-wider font-bold text-blue-500">
-                        <Zap size={10} className="mr-1" />
-                        Chọn nhanh
-                      </div>
+                      <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Background Presets</label>
+                      <Zap size={12} className="text-blue-500" />
                     </div>
-                    
-                    <div className="space-y-4">
-                      <div className="flex flex-wrap gap-2">
-                        {PRESETS.map((preset) => (
-                          <button
-                            key={preset.label}
-                            onClick={() => applyPreset(preset.value)}
-                            className={`px-3 py-1 text-xs font-medium rounded-full border transition-all shadow-sm ${
-                              state.bgDescription === preset.value 
-                              ? 'border-blue-600 bg-blue-600 text-white' 
-                              : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-blue-400 hover:bg-blue-50'
-                            }`}
-                          >
-                            {preset.label}
-                          </button>
-                        ))}
-                      </div>
-
-                      <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-100">
-                        <div className="w-full flex items-center text-[10px] font-bold text-slate-400 uppercase tracking-tighter mb-1">
-                          <User size={10} className="mr-1" /> Người mẫu Châu Á Trẻ đẹp
-                        </div>
-                        {MODEL_PRESETS.map((preset) => (
-                          <button
-                            key={preset.label}
-                            onClick={() => applyPreset(preset.value)}
-                            className={`px-3 py-1 text-xs font-medium rounded-full border transition-all shadow-sm ${
-                              state.bgDescription === preset.value 
-                              ? 'border-indigo-600 bg-indigo-600 text-white' 
-                              : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-indigo-400 hover:bg-indigo-50'
-                            }`}
-                          >
-                            {preset.label}
-                          </button>
-                        ))}
-                      </div>
+                    <div className="flex flex-wrap gap-2">
+                      {BACKGROUND_PRESETS.map((preset) => (
+                        <button
+                          key={preset.label}
+                          onClick={() => applyPreset(preset.value)}
+                          className={`flex items-center space-x-2 px-3 py-1.5 text-xs font-medium rounded-lg border transition-all shadow-sm ${
+                            state.bgDescription === preset.value 
+                            ? 'border-blue-600 bg-blue-600 text-white' 
+                            : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-blue-400 hover:bg-blue-50'
+                          }`}
+                        >
+                          {preset.icon}
+                          <span>{preset.label}</span>
+                        </button>
+                      ))}
                     </div>
+                  </div>
 
+                  {/* Model Presets Section */}
+                  <div className="space-y-3 pt-4 border-t border-slate-100">
+                    <div className="flex items-center justify-between">
+                      <label className="text-xs font-bold text-indigo-500 uppercase tracking-wider flex items-center">
+                        <User size={12} className="mr-1" /> Model Presets (Châu Á)
+                      </label>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {MODEL_PRESETS.map((preset) => (
+                        <button
+                          key={preset.label}
+                          onClick={() => applyPreset(preset.value)}
+                          className={`flex items-center space-x-2 px-3 py-1.5 text-xs font-medium rounded-lg border transition-all shadow-sm ${
+                            state.bgDescription === preset.value 
+                            ? 'border-indigo-600 bg-indigo-600 text-white' 
+                            : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-indigo-400 hover:bg-indigo-50'
+                          }`}
+                        >
+                          {preset.icon}
+                          <span>{preset.label}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">Mô tả chi tiết</label>
                     <textarea
-                      className="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent min-h-[120px] text-sm font-medium bg-slate-50/50 mt-4"
-                      placeholder="Mô tả bối cảnh..."
+                      className="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent min-h-[120px] text-sm font-medium bg-slate-50/50"
+                      placeholder="Mô tả bối cảnh hoặc người mẫu..."
                       value={state.bgDescription}
                       onChange={(e) => setState(prev => ({ ...prev, bgDescription: e.target.value }))}
                     />
-                    <p className="text-[10px] text-slate-400 italic mt-1">
-                      Mẹo: Thử tùy chọn Xuân Tết để tạo ảnh quảng cáo dịp lễ hội rực rỡ.
+                    <p className="text-[10px] text-slate-400 italic">
+                      Gợi ý: Chọn các tùy chọn nhanh ở trên để AI tự động tối ưu hóa câu lệnh prompt.
                     </p>
                   </div>
                 </div>
@@ -363,7 +411,7 @@ const App: React.FC = () => {
                   </div>
                   <h3 className="text-xl font-medium text-slate-600">Sẵn sàng tạo ra kiệt tác</h3>
                   <p className="max-w-md">
-                    Tải lên hình ảnh sản phẩm. Bạn có thể chọn bối cảnh Xuân Tết rực rỡ hoặc người mẫu Châu Á trẻ đẹp để tăng tính chuyên nghiệp.
+                    Tải lên hình ảnh sản phẩm. Chọn bối cảnh Xuân Tết rực rỡ hoặc người mẫu Châu Á trẻ đẹp để tăng tính hấp dẫn cho sản phẩm của bạn.
                   </p>
                 </div>
               )}
@@ -377,7 +425,7 @@ const App: React.FC = () => {
                   <div className="space-y-2">
                     <h3 className="text-xl font-semibold text-slate-700">Đang tách nền & phối cảnh...</h3>
                     <p className="text-slate-500 max-w-sm">
-                      Chúng tôi đang xử lý ánh sáng và shadow để đảm bảo sản phẩm của bạn trông thật nhất có thể.
+                      AI đang xử lý ánh sáng và đổ bóng tự nhiên cho sản phẩm của bạn.
                     </p>
                   </div>
                   <div className="w-full max-w-xs bg-slate-100 h-2 rounded-full overflow-hidden">
@@ -416,19 +464,19 @@ const App: React.FC = () => {
 
             <div className="mt-8 bg-blue-900 rounded-2xl p-8 text-white relative overflow-hidden">
               <div className="relative z-10">
-                <h3 className="text-xl font-bold mb-2">Mẹo cho kết quả tốt nhất</h3>
+                <h3 className="text-xl font-bold mb-2">Mẹo từ chuyên gia</h3>
                 <ul className="text-blue-100 text-sm space-y-2 max-w-lg">
                   <li className="flex items-center space-x-2">
                     <div className="w-1.5 h-1.5 bg-blue-400 rounded-full" />
-                    <span>Sử dụng ảnh sản phẩm có độ phân giải cao và ánh sáng đều.</span>
+                    <span>Sử dụng ảnh sản phẩm có độ nét cao để AI giữ nguyên chi tiết thương hiệu.</span>
                   </li>
                   <li className="flex items-center space-x-2">
                     <div className="w-1.5 h-1.5 bg-blue-400 rounded-full" />
-                    <span>Bối cảnh Xuân Tết rất phù hợp cho các chiến dịch marketing cuối năm tại Việt Nam.</span>
+                    <span>Bối cảnh Xuân Tết rất phù hợp cho chiến dịch khuyến mãi cuối năm.</span>
                   </li>
                   <li className="flex items-center space-x-2">
                     <div className="w-1.5 h-1.5 bg-blue-400 rounded-full" />
-                    <span>Thử nghiệm với nhiều variation để chọn góc sáng ưng ý nhất.</span>
+                    <span>Người mẫu trẻ đẹp giúp tăng tỷ lệ chuyển đổi đơn hàng trên các sàn TMĐT.</span>
                   </li>
                 </ul>
               </div>
